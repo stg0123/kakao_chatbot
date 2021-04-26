@@ -104,3 +104,4 @@ dist
 .tern-port
 goorm.manifest
 configs
+chromedriver_linux64.zip
