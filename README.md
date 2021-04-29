@@ -29,11 +29,12 @@
 
 - 실행 화면  
 
-![image](/libs/images/screen1.png)
+![image](/libs/images/screen1.PNG)  
 
 멘토 이름 , 멘토링 제목, 멘토링 날짜 , 멘토링 링크주소를 보내줌.  
 
-![image](/libs/images/screen12.png)
+![image](/libs/images/screen12.PNG)  
+
 동시에 여러글이 생겼을시 멘토링 마다 메세지를 보내줌  
 
 # 🎈결론  
