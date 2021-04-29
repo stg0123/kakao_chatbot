@@ -18,7 +18,7 @@
 
 
 # 📈구성도  
-![image](/libs/images/structure.PNG){:.align-center}
+![image](/libs/images/structure.PNG)
 
 # 📐동작예시  
 
@@ -27,4 +27,5 @@
 # 🎈결론  
 
 
-![image](/libs/images/somalogo.png){:.align-center}
+![image](/libs/images/somalogo.png)
+
