@@ -46,7 +46,7 @@ setInterval(async function(){
 				  blocks: [
 					{
 					  type: "header",
-					  text: "새로운 멘토링이 올라왔어요!",
+					  text: "🎈새로운 멘토링이 올라왔어요!🎈",
 					  style: "blue"
 					},
 					{
