@@ -2,6 +2,11 @@
 const libKakaoWork = require('./libs/kakaoWork');
 const express = require('express');
 const router = express.Router();
+const crawler = require('./crawling.js');
+
+
+
+
 setInterval(async function(){ 
 	// 로직 세우기 
 	// todo: 크롤러 호출
@@ -12,14 +17,26 @@ setInterval(async function(){
 	// 유저 목록 검색 (1)
 	
 	//const returned = []
-	const returned = [['글번호','글제목','신청기간','멘토링날짜','접수인원','접수중여부','멘토이름','등록일','https://www.swmaestro.org/sw/mypage/myMain/main.do?menuNo=200026'],
-					 ['글번호2','글제목2','신청기간2','멘토링날짜2','접수인원2','접수중여부2','멘토이름2','등록일2','https://www.swmaestro.org/sw/mypage/myMain/main.do?menuNo=200026']];
-
-	if(returned.length==0) return;
+	// 0: 글 no, 1: 글 제목, 2: 신청기간, 3: 멘토링날짜, 4: 접수인원, 5: 접수중여부, 6: 멘토이름, 7: 등록일, 8: 링크
 	
-	const users = await libKakaoWork.getUserList();
+	
+	var returned = await crawler.startCrawling();
+	console.log("crawler result : " + returned + "\n");
+	
+	//const returned = [['글번호','글제목','신청기간','멘토링날짜','접수인원','접수중여부','멘토이름','등록일','https://www.swmaestro.org/sw/mypage/myMain/main.do?menuNo=200026'],
+	//				 ['글번호2','글제목2','신청기간2','멘토링날짜2','접수인원2','접수중여부2','멘토이름2','등록일2','https://www.swmaestro.org/sw/mypage/myMain/main.do?menuNo=200026']];
+
+	if(returned == [] || returned.length==0) return;
+	
+	
+	
+	const users = await libKakaoWork.temp_getUserList();
+	
+	
+	
 	//console.log(users);
 	// 검색된 모든 유저에게 각각 채팅방 생성 (2)
+	//for(var i = 0;i<users.length;i++)
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
 	);
@@ -50,13 +67,13 @@ setInterval(async function(){
 					},
 					{
 					  type: "description",
-					  term: "일시",
-					  content: {
-						type: "text",
-						text: returned[i][3].toString(),
-						markdown: false
-					  },
-					  accent: true
+					  term: "일시" + returned[i][3].toString(),
+						// content: {
+						// type: "text",
+						// text:  returned[i][3].toString(),
+						// markdown: false
+						// },
+						// accent: true
 					},
 					{
 					  type: "button",
@@ -69,32 +86,15 @@ setInterval(async function(){
 			})
 		),
 	]);
- 	console.log(messages);
+ 	//console.log(messages);
 		
 	}
 	
-}, 60000);
+}, 10000);
+// prev 60000
 
 // const express = require('express');
 // const path = require('path');
-
-// /* 정혜일 mysql 연결 시도 *//*
-// const mysql = require('mysql');
-// var connection = mysql.createConnection({
-// 	host : 'localhost',
-// 	user : 'root'
-	
-	
-// });
-// connection.connect();
-
-// connection.query('SELECT 1+1 AS solution', function(error, results, fields){
-// 	if (error) throw error;
-// 	console.log('Solution : ', result[0].solution);
-// })
-
-// connection.end();*/
-// /* 정혜일 mysql 연결 시도 */
 
 // const logger = require('morgan');
 // const cookieParser = require('cookie-parser');
