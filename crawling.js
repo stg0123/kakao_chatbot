@@ -63,7 +63,7 @@ exports.startCrawling = async function() {
 	var fs = require('fs'); 
 	fs.readFile('db_num.txt', 'utf8', function(err, data) {
 		db_num = data;
-		console.log("db_num 가져오기 성공 ",data);  // 실제 동작시 주석 처리 하는게 좋을듯?
+		console.log("db_num 가져오기 성공 ",data);  
 	});
 
 	for (var i=0; i<10;i++){
