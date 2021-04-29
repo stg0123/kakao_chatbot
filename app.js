@@ -27,7 +27,7 @@ setInterval(async function(){
 		console.log("There is no NEW data!\n");
 		return;
 	}
-
+ 
 	const users = await libKakaoWork.getUserList();
 	//console.log(users);
 	// 검색된 모든 유저에게 각각 채팅방 생성 (2)
@@ -50,28 +50,48 @@ setInterval(async function(){
 					  style: "blue"
 					},
 					{
-					  type: "text",
-					  text: "멘토 : " + returned[i][6],
-					  markdown: true
+					  type: "description",
+					  term: "멘토",
+						content: {
+						  type: "text",
+						  text: returned[i][6].toString(),
+						  markdown: true
+						},	
+				      accent : true
 					},
 					{
-					  type: "text",
-					  text: "제목 : " + returned[i][1],
-					  markdown: true
+					  type: "description",
+					  term: "제목",
+						content: {
+						  type: "text",
+						  text: returned[i][1].toString(),
+						  markdown: true
+						},	
+				      accent : true
 					},
 					{
-					  type: "text",
-					  text: "일시 : " + returned[i][3].toString()
-						// content: {
-						// type: "text",
-						// text: returned[i][3].toString(),
-						// markdown: false
-						// },
-						// accent: true
+					  type: "description",
+					  term: "일시",
+						content: {
+						  type: "text",
+						  text: returned[i][3].toString(),
+						  markdown: false
+						},	
+				      accent : true
 					},
+					// {
+					//   type: "text",
+					//   text: "일시 : " + returned[i][3].toString()
+					// 	// content: {
+					// 	// type: "text",
+					// 	// text: returned[i][3].toString(),
+					// 	// markdown: false
+					// 	// },
+					// 	// accent: true
+					// },
 					{
 					  type: "button",
-					  text: "소마 홈페이지 바로가기",
+					  text: "멘토링 페이지 바로가기",
 					  style: "default",
 					  action_type: "open_system_browser",
 					  value : returned[i][8]
@@ -84,7 +104,7 @@ setInterval(async function(){
 
 	}
 
-}, 60000);
+}, 20000);
 // const libKakaoWork = require('./libs/kakaoWork');
 // const express = require('express');
 // const router = express.Router();
