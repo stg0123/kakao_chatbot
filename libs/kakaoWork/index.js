@@ -41,13 +41,20 @@ exports.getUserList = async () => {
   
   while(true) {
 	  var res;
-	  if(cursor==null) res = await kakaoInstance.get(`/v1/users.list?limit=1`); // cursor=null&limit=1 // corsor=null
+	  if(cursor==null) res = await kakaoInstance.get(`/v1/users.list?limit=100`); // cursor=null&limit=1 // corsor=null
 	  else res = await kakaoInstance.get(`/v1/users.list?cursor=${cursor}`); // cursor!=null&limit=1 // corsor!=null
 	  cursor = res.data.cursor;
-	  users.push(res.data.users);
-	  if (res.data.users.length == 0) break;
-	  console.log("find users : " + res.data.users) 
+	  
+	  users = users.concat(res.data.users); // 수정
+	  
+	  console.log("\n\tCURRENT USERS : \n" + JSON.stringify(res.data.users));
+	  
+	  if (cursor == null) break;
   }
+  
+	
+  console.log("\n\tUSER RESULT : \n" + JSON.stringify(users));
+	
   return users;
 };
 
