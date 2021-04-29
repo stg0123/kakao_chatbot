@@ -3,50 +3,7 @@ var webdriver = require('selenium-webdriver');
 var By = webdriver.By;
 var chrome = require('selenium-webdriver/chrome');
 var user_config = require('./configs/app/swm.js');
-
 // npm install selenium-webdriver 필요
-
-/*
-* // 수정자 : 최준성 //
-* 
-* 기존 코드 수정 사항은 아래와 같습니다.
-* 1페이지 하나의 멘토링만 긁어오던 것 -> 1페이지 전체 데이터 긁어오기로 수정 
-* 사용자가 링크로 클릭시 바로 해당 페이지로 이동할 수 있도록 링크 제공
-* db 대신 txt 파일에 마지막 번호 저장해두고 파일 읽기 쓰기로 수정
-*  - 가장 처음으로 실행할 때 반드시 사전에 txt파일을 만들고 멘토링 첫 페이지의 마지막 멘토링 번호를 저장해두고 실행해야 함 (첫 실행에서만 해주면 됩니다.)
-*  - txt 파일 이름은 db_num.txt로 설정하였음
-* 데이터 업데이트 유무에 따른 정보 반환
-*/
-
-/*
-04.27 수정자 : 손태균
-수정사항
-
-
-구름 문서중 selenium 설치하는 방법에 대한 글을 찾아 재설치 시도해봄
-/usr/local/share/chromedriver
-이 경로에 chromedriver를옮겨놓게 되어있음 일단 실행은 잘 됨
-
-
-nodejs의 chromeoption설정방법을 몰라 여기저기 찾아보면서 시도해봄
-selenium-webdriver/chrome패키지 chrome변수로 임포트
-chrome변수의 options() 객체를 만들어 setoption을통해 headless,npsandbox설정하고
-driver 빌드시 chromeoption을 넣어 빌드함
-
--메모리가 터지는 사태가 발생함 구름 ide에 공유메모리가 부족
-->('--disable-dev-shm-usage') 옵션으로 해결
-db_num 불러오고 업데이트시 숫자도 출력(불러온 값, 갱신한 값)
-
- */
-// 크롬 설치
-// wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-// sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-// sudo apt-get update
-// sudo apt-get install google-chrome-stable
-// 설치된 크롬 버전 확인코드
-// google-chrome --version 
-
-
 
 // 함수 리턴값  = 2차원 배열 (분배해야할 값이 없을 시 빈 배열)
 // 분배해야할 값이 1개의 멘토링일 경우 >> ls[0]에 정보 배열이 담겨있음 (ex ls[0][0] : 글no ls[0][1] : 글 제목 ... ls[0][8] : 링크)
@@ -131,7 +88,7 @@ exports.startCrawling = async function() {
 		// (추가적 멘토링이 있을 경우 ls에는 추가적 데이터가 담겨 있을 것이고 추가적 멘토링이 없다면 빈 배열)
 		if (db_num == num){
 			console.log(ls); //test 용으로 찍어본 로그
-			driver.quit(); // 브라우저 종료
+			await driver.quit(); // 브라우저 종료
 			return ls; 
 		} 
 		// 추가적 멘토링이 있고 첫 비교시 -> 파일의 db_num 수정
@@ -149,6 +106,9 @@ exports.startCrawling = async function() {
 			idx++;
 		}
 	}   	
+	console.log(ls);
+	await driver.quit();
+	return ls;
 }
 
 //exports.startCrawling();
