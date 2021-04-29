@@ -27,4 +27,4 @@
 # 🎈결론  
 
 
-![image](/libs/images/somalogo.PNG){:.align-center}
+![image](/libs/images/somalogo.png){:.align-center}

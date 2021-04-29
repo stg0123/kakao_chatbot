@@ -152,7 +152,7 @@ exports.startCrawling = async function() {
 		}   	
 	} catch(error){
 		return;
-}
+	}
 }
 
-exports.startCrawling();
+//exports.startCrawling();
