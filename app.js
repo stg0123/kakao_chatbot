@@ -2,7 +2,6 @@ const libKakaoWork = require('./libs/kakaoWork');
 const express = require('express');
 const crawler = require('./crawling.js');
 
-//
 var initiate = async function init(){
 	var fs = require('fs'); 
 	await fs.readFile('first_chat.txt', 'utf8', async function(err, data) {
