@@ -58,12 +58,13 @@ exports.startCrawling = async function() {
 	var key=0; // db_num와 num의 첫 비교시 file 수정을 위한 변수
 
 	var db_num; // db에 저장된 num 받을 변수
-
+	var num; // 멘토링번호 변수
+	
 	// txt 파일에서 db_num 읽기
 	var fs = require('fs'); 
 	fs.readFile('db_num.txt', 'utf8', function(err, data) {
 		db_num = data;
-		console.log("db_num 가져오기 성공 ",data);  
+		console.log("db_num 가져오기 성공 ",db_num);  
 	});
 
 	for (var i=0; i<10;i++){
@@ -83,17 +84,17 @@ exports.startCrawling = async function() {
 		mentoring_info[8] = linkText;
 
 		num = mentoring_info[0]; // 현재 멘토링 번호        
-
+		
 		// num과 db_num이 같아질 때 결과를 담은 ls배열 리턴 
 		// (추가적 멘토링이 있을 경우 ls에는 추가적 데이터가 담겨 있을 것이고 추가적 멘토링이 없다면 빈 배열)
-		if (db_num == num){
+		if (parseInt(db_num) >= parseInt(num)){
 			console.log(ls); //test 용으로 찍어본 로그
 			await driver.quit(); // 브라우저 종료
 			return ls; 
 		} 
 		// 추가적 멘토링이 있고 첫 비교시 -> 파일의 db_num 수정
-		else if(db_num<num && key ==0) {            
-			fs.writeFile('db_num.txt', num, 'utf8', function(error){ 
+		else if(key == 0){  
+			fs.writeFile('db_num.txt', num, 'utf8',function(error){ 
 				console.log('db_num 수정 성공',num); // 실제 동작시 주석 처리 하는게 좋을듯?
 			});
 			ls[idx] = mentoring_info;
@@ -101,14 +102,23 @@ exports.startCrawling = async function() {
 			key++;
 		}
 		// 추가적 멘토링이 있지만 첫 비교가 아닌 경우 -> 파일 수정 X
-		else if(db_num<num){
+		else{
 			ls[idx] = mentoring_info;
 			idx++;
 		}
-	}   	
+		
+	}
+	
+	// db_num이 100보다 작을시 1개만 리턴
+	// if(parseInt(db_num)<100){
+	// 	var short_ls = []; // 1개의 리스트만 저장할 리스트선언
+	// 	short_ls[0]=ls[0]; // 첫번째 리스트의 short_ls의 첫번째에 넣어 2차원 리스트로 만듬
+	// 	ls=short_ls;	// 이를 ls에 저장하여 1개의 리스트만 2차원으로 return 
+	// }
+	
 	console.log(ls);
 	await driver.quit();
 	return ls;
 }
 
-//exports.startCrawling();
+exports.startCrawling();

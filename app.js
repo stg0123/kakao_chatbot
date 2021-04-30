@@ -20,11 +20,11 @@ var initiate = async function init(){
 			conversations.map((conversation) =>
 				libKakaoWork.sendMessage({
 					conversationId: conversation.id,
-					text: "🎁멘토링.gg🎁",
+					text: "멘토링.gg",
 					blocks: [
 						{
 						  type: "header",
-						  text: "🎁멘토링.gg🎁(23팀)",
+						  text: "🎁멘토링.gg🎁",
 						  style: "blue"
 						},
 						{
